@@ -1,2 +1,3 @@
-# multi-docker
-Used by Travis CI to demonstrate full CI/CD from the docker-and-kubernetes course
+## A Continuous Integration Workflow for Multiple Images
+
+This repo contains coursework from the [docker-and-kubernetes-course](https://github.com/sund0g/docker-tutorials/tree/master/docker-and-kubernetes) starting with section 10 and onwards. The reason for this separate repo is because we are using Travis CI for CI/CD, which requires a single **.travis.yml** file at the root of a repo. As I have no desire to hack Travis such that I can keep this in the **complex** project subbdirectory in the [docker-and-kubernetes-course](https://github.com/sund0g/docker-tutorials/tree/master/docker-and-kubernetes), I am opting for just creating this new repo.
