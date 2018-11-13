@@ -18,11 +18,11 @@ after_success:
   - docker build -t sund0g/multi-server -f ./server/prod.Dockerfile ./server
   - docker build -t sund0g/multi-worker -f ./worker/prod.Dockerfile ./worker
 
-# Log into docker CLI
-- echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Log into docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
 
-# Push production assets to Docker Hub.
-- docker push sund0g/multi-client
-- docker push sund0g/multi-nginx
-- docker push sund0g/multi-server
-- docker push sund0g/multi-worker
+  # Push production assets to Docker Hub.
+  - docker push sund0g/multi-client
+  - docker push sund0g/multi-nginx
+  - docker push sund0g/multi-server
+  - docker push sund0g/multi-worker
