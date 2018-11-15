@@ -186,7 +186,7 @@ In this section, we learn,
 
 #### Lesson 146
 
-* Create **IAM Keys for deployment,
+* Create **IAM Keys** for deployment,
 	1. Navigate to the IAM dashboard
 	2. Select **Users**
 	3. Click the **Add Users** button
@@ -252,7 +252,63 @@ In this section, we learn,
 	
 	2. Check **Dockerrun.aws.json** into GitHub to kick off a Travis build/re-deploy to AWS.
 
+#### Lesson 149
 
+* Go to the Elastic Beanstalk dashboard and verify the application starts up.
+* Navigate to the app link provided at the top of the dashboard and verify it works.
+
+#### Lessons 150-151
+
+* Make a change to the app and re-deploy.
+
+#### Lesson 152
+
+* Clean up the AWS environment,
+
+	* **Elastic Beanstalk**
+		1. Navigate to the dashboard
+		2. Click the **Actions** button
+		3. Select **Delete application**
+
+	* **RDS/Postgres**
+		1. Navigate to the dashboard
+		2. Select **Instances**
+		3. Select the radio button for **multi-docker-postgres**
+		4. Click the **Instance Actions** dropdown
+		5. Select **Delete**
+		6. Uncheck the **Create final snapshot** option
+		7. Check the **acknowledgement**
+		8. Confirm deletion by typing *delete me* in the box
+		9. Click **Delete**
+
+	* **ElastiCache/Redis**
+		1. Navigate to the dashboard
+		2. Select **Redis**
+		3. Check the box for **multi-docker-redis**
+		4. Click the **Delete** button
+		5. Select **No** to create final backup
+		6. Click **Delete**
+
+	* **VPC Security Group**
+		1. Navigate to the dashboard
+		2. Select **Security Groups**
+		3. Select,
+			* **multi-docker**
+			* **rds-launch-wiard**
+		4. Click the **Actions** button
+		5. Select **Delete security group**
+		6. Click the **Delete security groups** button
+		
+			> A message may appear telling us that one or more of the security groups cannot be deleted. This is because it takes a while to shut down and remove all the services. Wait a few minutes and then try to delete the group(s) again.
+			
+	* **IAM User**
+		1. Navigate to the dashboard
+		2. Select **Users**
+		3. Check the **multi-docker-deployer** user
+		4. Click the **Delete user** button
+		5. Check the confirm delete box
+		6. Click **Yes, delete**
+		
 ---
 		
 ### Explanation of Dockerrun.aws.json
