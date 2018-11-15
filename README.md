@@ -30,7 +30,7 @@ In **Section 11** we learn,
 	6. In the subsequent environment settings page, select **Multi-container Docker** platform in the **Base configuration** section
 	7. Select **Create** atthe bottom of the page, (we don't care about the other environment settings as part of this lesson)
 
-7. Why leveraging [AWS Elasticache](https://aws.amazon.com/elasticache/), specifically for [Redis](https://aws.amazon.com/elasticache/redis/), and [AWS RDS](https://aws.amazon.com/rds/) for [Postgres](https://aws.amazon.com/rds/postgresql/) is preferrable to creating and running databases inside of containers we create. Two major advantages are production-quality **maintenance** and **security**, (lesson 139).  
+7. Why leveraging [AWS ElastiCache](https://aws.amazon.com/elasticache/), specifically for [Redis](https://aws.amazon.com/elasticache/redis/), and [AWS RDS](https://aws.amazon.com/rds/) for [Postgres](https://aws.amazon.com/rds/postgresql/) is preferrable to creating and running databases inside of containers we create. Two major advantages are production-quality **maintenance** and **security**, (lesson 139).  
 
 	> **All that being said... we will NOT be using any external services for the purpose of this course. Why? Because we are here to learn about containers. Plus not all service platforms provide these types of instances, e.g. Digital Ocean.**
 	
@@ -56,8 +56,8 @@ In **Section 11** we learn,
 		> **database name** maps to **PGDATABASE** in docker-compose.yml.
 		* The default values for the other settings are acceptable for this course, so select **Create database** to create the db instance.
 
-10. Create an elasticache (Redis) instance (lesson 142) as follows,
-	1. Navigate to the [AWS elasticache homepage](https://us-west-1.console.aws.amazon.com/elasticache/home?region=us-west-1#)
+10. Create an ElastiCache (Redis) instance (lesson 142) as follows,
+	1. Navigate to the [AWS ElastiCache homepage](https://us-west-1.console.aws.amazon.com/elasticache/home?region=us-west-1#)
 	2. Select **Redis** from the dashboard.
 	3. Select **Create**
 	4. In **Create your Amazon ElastiCache cluster | Redis** enter,
@@ -73,6 +73,99 @@ In **Section 11** we learn,
 			> \<Default VPC\> is where the rest of the services/containers are.
 		* select all the available **Subnets**
 		* The default values for the other settings are acceptable for this course, so select **Create** to create the Redis instance.
+
+11. Create an AWS **custom security group** to connect the services, (lesson 143) as follows,
+
+	1. Navigate to the **VPC** dashboard.
+	2. Click the **Create Security Group** button
+	3. Enter **multi-docker** as the **Name tag**
+	4. Enter **Traffic for services in multi-docker app** as the **Description**
+	5. Select **\<Default VPC\>** as the **VPC**
+	6. Click the **Yes, Create** button
+	7. Select the newly created **multi-docker** security group
+	8. Select the **Inbound Rules** tab
+	9. Click **Edit**
+	10. Set the **Port Range** as **5432-6379**
+	
+		> The port ranges are the same as the **PGPORT (5432)** and **REDIS_PORT (6379)** environment variables in **docker-compose**.
+	11. Select the newly created **multi-docker** security group from the **Source** listbox. 
+	
+		> This allows traffic from any other service in the same security group.
+	12. Click the **Save** button
+
+12. Assign the EB, RDS, and Redis services to the **multi-docker** security group, (lesson 144) as follows,
+	* **ElastiCache/Redis**
+		1. Navigate to the dashboard
+		2. Select the box for **multi-docker-redis**
+		3. Click the **Modify** button
+		4. Edit the **VPC Security Groups**
+		5. Add the **multi-docker** security group
+		6. Click **Save**
+		
+			> We have a maintenance window option available for ElastiCache so we could minimize downtime for users should we need to.
+		7. Click **Modify**
+	* **RDS/Postgres**
+		1. Navigate to the dashboard
+		2. Select **Instances**
+		3. Select the **multi-docker-postgres** instance
+		4. Scroll down to the **Details** section and click the **Modify** button.
+		5. Scroll down to the **Network & Security** section
+		6. Select the **Security Group** listbox
+		7. Add the **multi-docker** security group
+		8. Scroll to the bottom and click the **Continue** button
+		9. Select **Apply immediately** (See maintenance comment in the RDS section above for details)
+		10. Click the **Modify DB Instance** button
+	
+	* **Elastic Beanstalk**
+		1. Navigate to the dashboard
+		2. Select the **MultiDocker-env** application
+		3. Select **Configuration**
+		4. Click **Modify** at the bottom of the **Instances** card
+		5. Scroll down to **EC2 Security Groups**
+		6. Check the **multi-docker** security group
+		7. Click **Apply**
+		
+			> The warning notifies that all the EC2 instances that are part of the application will be restarted so the update will take effect.
+		8. Click the **Confirm** button
+
+13. Set environment variables such that the containers in the Elastic Beanstalk instance know how to communicate with the RDS and ElastiCache services, (the same as was done in **docker-compose**)
+	1. Navigate to the **Elastic Beanstalk** dashboard (porobably still there from step 12)
+	2. Select **Configuration**
+	3. Click **Modify** at the bottom of the **Software** card
+	4. Scroll to the **Environment Properties** section
+	5. Add the environment variables from **docker-compose.yml**,
+
+		Name       | Value
+		---------- | ----------
+		REDIS_HOST | \<ElastiCache Primary Endpoint\>
+		REDIS_PORT | 6379
+		PGUSER     | postgres
+		PGPASSWORD | postgrespassword
+		PGHOST     | \<RDS Endpoint\>
+		PGDATABASE | fibvalues
+		PGPORT     | 5432
+		
+		> Get the **\<ElastiCache Primary Endpoint\>** from the Redis instance of the ElastiCache dashboard. Do Not include the port.
+		
+		> Get the **\<RDS Endpoint\>** from the **multi-docker-postgres** instance on the RDS dashboard, in the **Connect** section.
+		
+	6. Click the **Apply** button
+
+14. Create **IAM Keys for deployment, (lesson 146)
+	1. Navigate to the IAM dashboard
+	2. Select **Users**
+	3. Click the **Add Users** button
+	4. Enter **multi-docker-deployer** as the user name
+	5. Select **Programmatic access** as **Access type**
+	6. Click the **Next:Permissions** button
+	7. Click the **Attach existing policies directly** card
+	8. Search for **beanstalk** and add all returned services.
+	9. Click the **Next:Review** button
+	10. Review and click the **Create User** button
+
+15. Add the keys to Travis CI
+	1. 
+
 	
 ### Explanation of Dockerrun.aws.json
 
