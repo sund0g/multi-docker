@@ -41,6 +41,6 @@ deploy:
   secret_access_key:
     secure: $AWS_SECRET_KEY
   
-  # The course builds only on the master branch. I am building on a branch so commenting this out.
-  #on:
-  #  branch: master
+  # Have to create a pull request at this point to get the deploy working.
+  on:
+    branch: master
