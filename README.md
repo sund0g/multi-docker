@@ -24,7 +24,7 @@ In this section, we learn,
 
 * Learn which [Task definition parameters](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters.html) and [Container definitions](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters.html#container_definitions) to use when creating **Dockerrun.aws.json**.
 
-	> The format described in the Container definitions docuementation is what is used to create this projects' Dockerrun file.
+	> The format described in the Container definitions documentation is what is used to create this projects' Dockerrun file.
 
 #### Lesson 137
 	
@@ -46,7 +46,7 @@ In this section, we learn,
 
 #### Lesson 139
 
-* Learn why leveraging [AWS ElastiCache](https://aws.amazon.com/elasticache/), specifically for [Redis](https://aws.amazon.com/elasticache/redis/), and [AWS RDS](https://aws.amazon.com/rds/) for [Postgres](https://aws.amazon.com/rds/postgresql/) is preferrable to creating and running databases inside of containers we create. Two major advantages are production-quality **maintenance** and **security**.  
+* Learn why leveraging [AWS ElastiCache](https://aws.amazon.com/elasticache/), specifically for [Redis](https://aws.amazon.com/elasticache/redis/), and [AWS RDS](https://aws.amazon.com/rds/) for [Postgres](https://aws.amazon.com/rds/postgresql/) is preferable to creating and running databases inside of containers we create. Two major advantages are production-quality **maintenance** and **security**.  
 
 	> **All that being said... we will NOT be using any external services for the purpose of this course. Why? Because we are here to learn about containers. Plus not all service platforms provide these types of instances, e.g. Digital Ocean.**
 
@@ -204,7 +204,7 @@ In this section, we learn,
 	2. Navigate to the **multi-docker** project
 	3. Select **Options | Settings**
 	4. Scroll to the **Environment Variables** section
-	5. Add the following environment vairables,
+	5. Add the following environment variables,
 	
 		Name           | Value
 		-------------- | ----------
@@ -230,13 +230,13 @@ In this section, we learn,
 		
 	> **\<bucket name\>** comes from the **S3** dashboard
 	
-* Check everything in and create a Pull Request to merge the branch back to master. This will initiate a Travis buid, which, if there are no syntax errors will result in a deployment to AWS.
+* Check everything in and create a Pull Request to merge the branch back to master. This will initiate a Travis build, which, if there are no syntax errors will result in a deployment to AWS.
 	
 #### Lesson 148
 
 * Fix an error in **Dockerrun.aws.json**
 
-	* After succesfully deploying to AWS in Lesson 147, navigate to the Elastic Beanstalk dashboard. There should be an error something like,
+	* After successfully deploying to AWS in Lesson 147, navigate to the Elastic Beanstalk dashboard. There should be an error something like,
 
 	*Service:AmazonECS, Code:ClientException, Message:Invalid setting for container 'client'. At least one of 'memory' or 'memoryReservation' must be specified., Class:com.amazonaws.services.ecs.model.ClientException*
 	
@@ -294,7 +294,7 @@ In this section, we learn,
 		2. Select **Security Groups**
 		3. Select,
 			* **multi-docker**
-			* **rds-launch-wiard**
+			* **rds-launch-wizard**
 		4. Click the **Actions** button
 		5. Select **Delete security group**
 		6. Click the **Delete security groups** button
@@ -323,7 +323,7 @@ Because json doesn't support comments, its contents are described here. For full
 
 	> **hostname** is optional, it is only required if the service has to be directly accessed, e.g. **client** and **server** are directly accessed while **worker** and **nginx** are not. It can be added for completeness if the service is not directly accessed.
 	
-* **essential** when **false** means that the container is not critical and other containers will not stop if ot does. If **true** all associated containers will stop if the container stops.
+* **essential** when **false** means that the container is not critical and other containers will not stop if it does. If **true** all associated containers will stop if the container stops.
 
 	> At least one service in the containerDefinitions section must have essential set to true.
 
