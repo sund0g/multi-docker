@@ -1,26 +1,40 @@
-## A Continuous Integration Workflow for Multiple Images
+## Overview
 
 This repo contains coursework from the [docker-and-kubernetes-course](https://github.com/sund0g/docker-tutorials/tree/master/docker-and-kubernetes) starting with section 10 and onwards. The reason for this separate repo is because we are using Travis CI for CI/CD, which requires a single **.travis.yml** file at the root of a repo. As I have no desire to hack Travis such that I can keep this in the **complex** project subbdirectory in the [docker-and-kubernetes-course](https://github.com/sund0g/docker-tutorials/tree/master/docker-and-kubernetes), I am opting for just creating this new repo.
 
-In **Section 10** we learn,
+### Section 10: A Continuous Integration Workflow for Multiple Images
+
+In this section, we learn,
 
 1. How to create production, multi-container builds.
 2. Lots of info about nginx.
 3. How to configure Travis CI to build our project and push production assets to Docker Hub.
 
-In **Section 11** we learn,
+### Section 11: Multi-Container Deployments to AWS 
 
-1. How to deploy to [AWS Elastic Beanstalk](https://aws.amazon.com/elasticbeanstalk/?sc_channel=PS&sc_campaign=acquisition_US&sc_publisher=google&sc_medium=ACQ-P%7CPS-GO%7CBrand%7CDesktop%7CSU%7CMachine%20Learning%7CElastic%20Beanstalk%7CUS%7CEN%7CText&sc_content=elastic_beanstalk_e&sc_detail=aws%20elastic%20beanstalk&sc_category=Machine%20Learning&sc_segment=293647516945&sc_matchtype=e&sc_country=US&s_kwcid=AL!4422!3!293647516945!e!!g!!aws%20elastic%20beanstalk&ef_id=EAIaIQobChMItf_exfzR3gIVA-DICh3ssQN6EAAYASAAEgLbSfD_BwE:G:s) using a special file, [Dockerrun.aws.json](https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_docker_v2config.html)
-2. The similarities and differences between **Dockerrun.aws.json** and **docker-compose.yml**, (lesson 133).
-3.  How to use [AWS ECS](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/Welcome.html) to tell Elastic Beanstalk what to do with the containers using [task definitions](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definitions.html).  Task definitions are essentially what the dockerrun file consists of.
-4. Which [Task definition parameters](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters.html) and [Container definitions](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters.html#container_definitions) to use when creating **Dockerrun.aws.json** (lessons 134-136).
+#### Lesson 133
+
+* Learn how to deploy to [AWS Elastic Beanstalk](https://aws.amazon.com/elasticbeanstalk/?sc_channel=PS&sc_campaign=acquisition_US&sc_publisher=google&sc_medium=ACQ-P%7CPS-GO%7CBrand%7CDesktop%7CSU%7CMachine%20Learning%7CElastic%20Beanstalk%7CUS%7CEN%7CText&sc_content=elastic_beanstalk_e&sc_detail=aws%20elastic%20beanstalk&sc_category=Machine%20Learning&sc_segment=293647516945&sc_matchtype=e&sc_country=US&s_kwcid=AL!4422!3!293647516945!e!!g!!aws%20elastic%20beanstalk&ef_id=EAIaIQobChMItf_exfzR3gIVA-DICh3ssQN6EAAYASAAEgLbSfD_BwE:G:s) using a special file, [Dockerrun.aws.json](https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_docker_v2config.html)
+
+* Get an overview of the similarities and differences between **Dockerrun.aws.json** and **docker-compose.yml**.
+
+#### Lessons 134-136
+
+* Use [AWS ECS](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/Welcome.html) to tell Elastic Beanstalk what to do with the containers using [task definitions](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definitions.html).  Task definitions are essentially what the dockerrun file consists of.
+
+* Learn which [Task definition parameters](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters.html) and [Container definitions](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters.html#container_definitions) to use when creating **Dockerrun.aws.json**.
 
 	> The format described in the Container definitions docuementation is what is used to create this projects' Dockerrun file.
-	
-5. How to use links for routing with nginx, (lesson 137). *see details in the explanation of the Dockerrun file below*.
-6. How to create a production environment using [AWS Elastic Beanstalk](https://aws.amazon.com/elasticbeanstalk/?sc_channel=PS&sc_campaign=acquisition_US&sc_publisher=google&sc_medium=ACQ-P%7CPS-GO%7CBrand%7CDesktop%7CSU%7CMachine%20Learning%7CElastic%20Beanstalk%7CUS%7CEN%7CText&sc_content=elastic_beanstalk_e&sc_detail=aws%20elastic%20beanstalk&sc_category=Machine%20Learning&sc_segment=293647516945&sc_matchtype=e&sc_country=US&s_kwcid=AL!4422!3!293647516945!e!!g!!aws%20elastic%20beanstalk&ef_id=EAIaIQobChMItf_exfzR3gIVA-DICh3ssQN6EAAYASAAEgLbSfD_BwE:G:s), (lesson 138). To do this execute the following steps,
 
-	**WARNING!!! You will be charged to use any AWS service if your account is 1+ years old. To avoid excess charges, you MUST remember to delete all instances created from the lessons in this course.**
+#### Lesson 137
+	
+* Learn how to use links for routing with nginx. *see details in the explanation of the Dockerrun file below*.
+
+#### Lesson 138
+
+> **WARNING!!! You will be charged to use any AWS service if your account is 1+ years old. To avoid excess charges, you MUST remember to delete all instances created from the lessons in this course.**
+
+* Create a production environment using [AWS Elastic Beanstalk](https://aws.amazon.com/elasticbeanstalk/?sc_channel=PS&sc_campaign=acquisition_US&sc_publisher=google&sc_medium=ACQ-P%7CPS-GO%7CBrand%7CDesktop%7CSU%7CMachine%20Learning%7CElastic%20Beanstalk%7CUS%7CEN%7CText&sc_content=elastic_beanstalk_e&sc_detail=aws%20elastic%20beanstalk&sc_category=Machine%20Learning&sc_segment=293647516945&sc_matchtype=e&sc_country=US&s_kwcid=AL!4422!3!293647516945!e!!g!!aws%20elastic%20beanstalk&ef_id=EAIaIQobChMItf_exfzR3gIVA-DICh3ssQN6EAAYASAAEgLbSfD_BwE:G:s) executing the following steps,
 		
 	1. Log into the AWS console
 	2. Navigate to the Elastic Beanstalk service
@@ -30,18 +44,25 @@ In **Section 11** we learn,
 	6. In the subsequent environment settings page, select **Multi-container Docker** platform in the **Base configuration** section
 	7. Select **Create** at the bottom of the page, (we don't care about the other environment settings as part of this lesson)
 
-7. Why leveraging [AWS ElastiCache](https://aws.amazon.com/elasticache/), specifically for [Redis](https://aws.amazon.com/elasticache/redis/), and [AWS RDS](https://aws.amazon.com/rds/) for [Postgres](https://aws.amazon.com/rds/postgresql/) is preferrable to creating and running databases inside of containers we create. Two major advantages are production-quality **maintenance** and **security**, (lesson 139).  
+#### Lesson 139
+
+* Learn why leveraging [AWS ElastiCache](https://aws.amazon.com/elasticache/), specifically for [Redis](https://aws.amazon.com/elasticache/redis/), and [AWS RDS](https://aws.amazon.com/rds/) for [Postgres](https://aws.amazon.com/rds/postgresql/) is preferrable to creating and running databases inside of containers we create. Two major advantages are production-quality **maintenance** and **security**.  
 
 	> **All that being said... we will NOT be using any external services for the purpose of this course. Why? Because we are here to learn about containers. Plus not all service platforms provide these types of instances, e.g. Digital Ocean.**
-	
-8. How to create an AWS **Security Group** so that our services/containers can communicate with each other in the **VPC** (lesson 140) *Instructions for this are in Step 11 below*.
 
-9. Create a RDS (Postgres) instance (lesson 141) as follows,
+#### Lesson 140
+
+* Create an AWS **Security Group** so that our services/containers can communicate with each other in the **VPC**. *Instructions for this are in Lesson 143*.
+
+#### Lesson 141
+
+* Create a RDS (Postgres) instance as follows,
+
 	1. Navigate to the [AWS RDS homepage](https://us-west-1.console.aws.amazon.com/rds/home?region=us-west-1)
 	2. Select **Create database**
 	3. Select **Postgres** as the database engine
 
-		> It is recommended for this course to check the box to **Only enable options eligible for RDS Free Usage Tier** 
+		> Course recommendation: check the box to **Only enable options eligible for RDS Free Usage Tier** 
 	4. Select **Next**
 	5. In the **Settings** section enter,
 		* **multi-docker-postgres** as the **DB instance identifier**
@@ -54,9 +75,12 @@ In **Section 11** we learn,
 	6. In **Configure Advanced Settings** enter **database name** as **fibvalues**
 
 		> **database name** maps to **PGDATABASE** in docker-compose.yml.
-		* The default values for the other settings are acceptable for this course, so select **Create database** to create the db instance.
+		
+	7. The default values for the other settings are acceptable for this course, so select **Create database** to create the db instance.
 
-10. Create an ElastiCache (Redis) instance (lesson 142) as follows,
+#### Lesson 142
+
+* Create an ElastiCache (Redis) instance as follows,
 	1. Navigate to the [AWS ElastiCache homepage](https://us-west-1.console.aws.amazon.com/elasticache/home?region=us-west-1#)
 	2. Select **Redis** from the dashboard.
 	3. Select **Create**
@@ -70,11 +94,13 @@ In **Section 11** we learn,
 		* enter **redis-group** as the **Name**
 		* select **\<Default VPC\>** as the **VPC ID**
 		
-			> \<Default VPC\> is where the rest of the services/containers are.
+			> **\<Default VPC\>** is where the rest of the services/containers are.
 		* select all the available **Subnets**
-		* The default values for the other settings are acceptable for this course, so select **Create** to create the Redis instance.
+	6. The default values for the other settings are acceptable for this course, so select **Create** to create the Redis instance.
 
-11. Create an AWS **custom security group** to connect the services, (lesson 143) as follows,
+#### Lesson 143
+
+* Create an AWS **custom security group** to connect the services, as follows,
 
 	1. Navigate to the **VPC** dashboard.
 	2. Select **Security Groups** card
@@ -94,7 +120,9 @@ In **Section 11** we learn,
 		> This allows traffic from any other service in the same security group.
 	13. Click the **Save** button
 
-12. Assign the EB, RDS, and Redis services to the **multi-docker** security group, (lesson 144) as follows,
+#### Lesson 144
+
+* Assign the EB, RDS, and Redis services to the **multi-docker** security group, as follows,
 	* **ElastiCache/Redis**
 		1. Navigate to the dashboard
 		2. Select the box for **multi-docker-redis**
@@ -131,7 +159,9 @@ In **Section 11** we learn,
 			> The warning notifies that all the EC2 instances that are part of the application will be restarted so the update will take effect.
 		8. Click the **Confirm** button
 
-13. Set environment variables such that the containers in the Elastic Beanstalk instance know how to communicate with the RDS and ElastiCache services, (the same as was done in **docker-compose**)
+#### Lesson 145
+
+* Set environment variables such that the containers in the Elastic Beanstalk instance know how to communicate with the RDS and ElastiCache services, (the same as was done in **docker-compose**)
 	1. Navigate to the **Elastic Beanstalk** dashboard (probably still there from step 12)
 	2. Select **Configuration**
 	3. Click **Modify** at the bottom of the **Software** card
@@ -154,7 +184,9 @@ In **Section 11** we learn,
 		
 	6. Click the **Apply** button
 
-14. Create **IAM Keys for deployment, (lesson 146)
+#### Lesson 146
+
+* Create **IAM Keys for deployment,
 	1. Navigate to the IAM dashboard
 	2. Select **Users**
 	3. Click the **Add Users** button
@@ -166,9 +198,9 @@ In **Section 11** we learn,
 	9. Click the **Next:Review** button
 	10. Review and click the **Create User** button
 
-15. Add the keys to Travis CI
+* Add the keys to Travis CI
 
-	1. Navigate to the dashboard
+	1. Navigate to the Travis CI dashboard
 	2. Navigate to the **multi-docker** project
 	3. Select **Options | Settings**
 	4. Scroll to the **Environment Variables** section
@@ -180,8 +212,10 @@ In **Section 11** we learn,
 		AWS\_SECRET_KEY | \<Secret access key\>
 		
 		> Get the \<Access key ID\> and \<Secret access key\> from the IAM console
-		
-16. Add the following variables, (as a single object) to a **deploy** section in **.travis.yml**, (lesson 147)
+
+#### Lesson 147
+
+* Add the following variables, (as a single object) to a **deploy** section in **.travis.yml**,
 
 	Name               | Value
 	------------------ | ----------
@@ -195,6 +229,31 @@ In **Section 11** we learn,
 	secret\_access_key | secure: $AWS\_SECRET_KEY
 		
 	> **\<bucket name\>** comes from the **S3** dashboard
+	
+* Check everything in and create a Pull Request to merge the branch back to master. This will initiate a Travis buid, which, if there are no syntax errors will result in a deployment to AWS.
+	
+#### Lesson 148
+
+* Fix an error in **Dockerrun.aws.json**
+
+	* After succesfully deploying to AWS in Lesson 147, navigate to the Elastic Beanstalk dashboard. There should be an error something like,
+
+	*Service:AmazonECS, Code:ClientException, Message:Invalid setting for container 'client'. At least one of 'memory' or 'memoryReservation' must be specified., Class:com.amazonaws.services.ecs.model.ClientException*
+	
+	> This error is telling us that the **memory** option must be specified in the **Dockerrun.aws.json** file. This option tells the service provider how much memory to allocate to the service.
+	
+	To fix the error,
+
+	1. add the following to all of the **containerDefinitions** in **Dockerrun.aws.json**,
+
+		**`"memory": 128`**
+		
+		> 128 (Mb) is what we're using for all our services in this course. It is not a general guideline. you have to research how much memory is required for your specific service(s).
+	
+	2. Check **Dockerrun.aws.json** into GitHub to kick off a Travis build/re-deploy to AWS.
+
+
+---
 		
 ### Explanation of Dockerrun.aws.json
 
