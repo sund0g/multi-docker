@@ -1,0 +1,46 @@
+sudo: required
+
+services:
+  # Need Docker to build
+  - docker
+
+# Create and test the client before creating production assets.
+before_install:
+  - docker build -t sund0g/react-test -f ./client/dev.Dockerfile ./client
+
+script:
+  - docker run sund0g/react-test npm test -- --coverage
+
+# If the client tests pass, create production assets.
+after_success:
+  - docker build -t sund0g/multi-client -f ./client/prod.Dockerfile ./client
+  - docker build -t sund0g/multi-nginx -f ./nginx/prod.Dockerfile ./nginx
+  - docker build -t sund0g/multi-server -f ./server/prod.Dockerfile ./server
+  - docker build -t sund0g/multi-worker -f ./worker/prod.Dockerfile ./worker
+
+  # Log into docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+
+  # Push production assets to Docker Hub.
+  - docker push sund0g/multi-client
+  - docker push sund0g/multi-nginx
+  - docker push sund0g/multi-server
+  - docker push sund0g/multi-worker
+
+# NOTE: the deploy entries are presented as a single onject, not as array items.
+deploy:
+  provider: elasticbeanstalk
+  region: us-west-1
+  app: multi-docker
+  env: MultiDocker-env
+  # Where TravisCI zips up production assets and delivers them to S3.
+  bucket_name: elasticbeanstalk-us-west-1-235521428926
+  bucket_path: docker-multi
+  # IAM credentials
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key:
+    secure: $AWS_SECRET_KEY
+  
+  # Have to create a pull request at this point to get the deploy working.
+  on:
+    branch: master
