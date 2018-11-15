@@ -183,16 +183,16 @@ In **Section 11** we learn,
 		
 16. Add the following variables, (as a single object) to a **deploy** section in **.travis.yml**, (lesson 147)
 
-		Name               | Value
-		------------------ | ----------
-		provider           | elasticbeanstalk
-		region             | us-west-1
-		app                | multi-docker
-		env                | MultiDocker-env
-		bucket_name        | \<bucket name\>
-		bucket_path        | docker-multi
-		access\_key_id     | $AWS\_ACCESS_KEY
-		secret\_access_key | secure: $AWS\_SECRET_KEY
+	Name               | Value
+	------------------ | ----------
+	provider           | elasticbeanstalk
+	region             | us-west-1
+	app                | multi-docker
+	env                | MultiDocker-env
+	bucket_name        | \<bucket name\>
+	bucket_path        | docker-multi
+	access\_key_id     | $AWS\_ACCESS_KEY
+	secret\_access_key | secure: $AWS\_SECRET_KEY
 		
 	> **\<bucket name\>** comes from the **S3** dashboard
 		

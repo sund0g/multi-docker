@@ -26,3 +26,21 @@ after_success:
   - docker push sund0g/multi-nginx
   - docker push sund0g/multi-server
   - docker push sund0g/multi-worker
+
+# NOTE: the deploy entries are presented as a single onject, not as array items.
+deploy:
+  provider: elasticbeanstalk
+  region: us-west-1
+  app: multi-docker
+  env: MultiDocker-env
+  # Where TravisCI zips up production assets and delivers them to S3.
+  bucket_name: elasticbeanstalk-us-west-1-235521428926
+  bucket_path: docker-multi
+  # IAM credentials
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key:
+    secure: $AWS_SECRET_KEY
+  
+  # The course builds only on the master branch. I am building on a branch so commenting this out.
+  #on:
+  #  branch: master
